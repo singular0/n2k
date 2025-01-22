@@ -77,3 +77,12 @@ func (c *SocketCANEndpoint) frameReady(frame can.Frame) {
 		c.handler.HandleMessage(adapter.Message(&frame))
 	}
 }
+
+func (c *SocketCANEndpoint) WriteFrame(frame can.Frame) {
+	if c.channel != nil {
+		if err := c.channel.WriteFrame(frame); err != nil {
+			c.log.Errorf("error writing frame: %v", err)
+		}
+	}
+}
+
